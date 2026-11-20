@@ -1,0 +1,286 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXORA AI — One platform. Many possibilities.</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #080b14;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        header {
+            height: 85px;
+            padding: 0 8%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #1b2233;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: #398bff;
+        }
+
+        nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        nav a {
+            color: #aab3c5;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        nav a:hover {
+            color: #398bff;
+        }
+
+        .login {
+            background: #398bff;
+            color: white;
+            border: none;
+            padding: 12px 23px;
+            border-radius: 9px;
+            cursor: pointer;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 110px 20px 85px;
+            background: radial-gradient(ellipse at top, #142b54 0%, #080b14 65%);
+        }
+
+        .tag {
+            display: inline-block;
+            border: 1px solid #294c80;
+            color: #65a7ff;
+            padding: 9px 18px;
+            border-radius: 30px;
+            font-size: 13px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: clamp(42px, 7vw, 76px);
+            line-height: 1.12;
+            margin-bottom: 25px;
+        }
+
+        h1 span {
+            color: #398bff;
+        }
+
+        .hero p {
+            color: #aab3c5;
+            font-size: 18px;
+            max-width: 650px;
+            margin: auto;
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            margin-top: 35px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .primary, .secondary {
+            padding: 16px 27px;
+            border-radius: 10px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .primary {
+            background: #398bff;
+            color: white;
+            border: none;
+        }
+
+        .secondary {
+            background: transparent;
+            color: white;
+            border: 1px solid #35415a;
+        }
+
+        .tools {
+            padding: 65px 8%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 34px;
+            margin-bottom: 15px;
+        }
+
+        .section-description {
+            text-align: center;
+            color: #8995aa;
+            margin-bottom: 45px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: #101725;
+            border: 1px solid #202c40;
+            padding: 28px;
+            border-radius: 16px;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #398bff;
+        }
+
+        .card-icon {
+            font-size: 34px;
+            margin-bottom: 22px;
+        }
+
+        .card h3 {
+            font-size: 21px;
+            margin-bottom: 13px;
+        }
+
+        .card p {
+            color: #929eb2;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #68758a;
+            border-top: 1px solid #1b2233;
+        }
+
+        @media (max-width: 700px) {
+            header {
+                padding: 0 5%;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .hero {
+                padding-top: 80px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">NEXORA<span> AI</span></div>
+
+        <nav>
+            <a href="#home">Главная</a>
+            <a href="#tools">AI Tools</a>
+            <a href="#about">О платформе</a>
+        </nav>
+
+        <button class="login">Войти</button>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="tag">✦ YOUR NEXT GENERATION AI PLATFORM</div>
+
+        <h1>
+            One platform.<br>
+            <span>Many possibilities.</span>
+        </h1>
+
+        <p>
+            Всё необходимое для работы, бизнеса и творчества
+            объединено в одной интеллектуальной платформе.
+        </p>
+
+        <div class="hero-buttons">
+            <button class="primary" onclick="showMessage()">
+                Начать бесплатно →
+            </button>
+
+            <button class="secondary" onclick="document.getElementById('tools').scrollIntoView({behavior:'smooth'})">
+                Изучить возможности
+            </button>
+        </div>
+    </section>
+
+    <section class="tools" id="tools">
+        <h2 class="section-title">Powerful AI Tools</h2>
+
+        <p class="section-description">
+            Инструменты искусственного интеллекта для твоих задач
+        </p>
+
+        <div class="cards">
+
+            <div class="card">
+                <div class="card-icon">✍️</div>
+                <h3>AI Writer</h3>
+                <p>Создавай тексты, рекламу, письма и публикации за несколько секунд.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">📊</div>
+                <h3>AI Business</h3>
+                <p>Разрабатывай бизнес-планы, стратегии и анализируй идеи.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">🤖</div>
+                <h3>AI Assistant</h3>
+                <p>Твой интеллектуальный помощник для ежедневных задач.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">🎨</div>
+                <h3>AI Image</h3>
+                <p>Создавай изображения и воплощай свои творческие идеи.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <footer id="about">
+        © 2026 NEXORA AI. One platform. Many possibilities.
+    </footer>
+
+    <script>
+        function showMessage() {
+            alert("Добро пожаловать в NEXORA AI! Скоро здесь появится регистрация.");
+        }
+    </script>
+
+</body>
+</html>
