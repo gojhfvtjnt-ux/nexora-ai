@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080b14">
     <title>NEXORA AI — One platform. Many possibilities.</title>
 
     <style>
@@ -13,12 +14,60 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: Arial, sans-serif;
             background: #080b14;
             color: #ffffff;
             min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            isolation: isolate;
         }
+
+        /* ANIMATED BACKGROUND */
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: -40%;
+            z-index: -1;
+            pointer-events: none;
+            background:
+                radial-gradient(
+                    circle at 25% 35%,
+                    rgba(40, 120, 255, 0.19),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at 75% 65%,
+                    rgba(130, 70, 255, 0.16),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at 50% 50%,
+                    rgba(0, 190, 255, 0.10),
+                    transparent 40%
+                );
+            animation: nexoraAurora 16s ease-in-out infinite alternate;
+        }
+
+        @keyframes nexoraAurora {
+            0% {
+                transform: translate(-3%, -2%) scale(1);
+            }
+            50% {
+                transform: translate(3%, 2%) scale(1.08);
+            }
+            100% {
+                transform: translate(-2%, 3%) scale(1.03);
+            }
+        }
+
+        /* HEADER */
 
         header {
             height: 85px;
@@ -27,6 +76,11 @@
             align-items: center;
             justify-content: space-between;
             border-bottom: 1px solid #1b2233;
+            background: rgba(8, 11, 20, 0.72);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            position: relative;
+            z-index: 10;
         }
 
         .logo {
@@ -37,6 +91,16 @@
 
         .logo span {
             color: #398bff;
+            animation: logoGlow 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes logoGlow {
+            from {
+                text-shadow: 0 0 5px rgba(57, 139, 255, 0.2);
+            }
+            to {
+                text-shadow: 0 0 17px rgba(57, 139, 255, 0.85);
+            }
         }
 
         nav {
@@ -48,10 +112,36 @@
             color: #aab3c5;
             text-decoration: none;
             font-size: 14px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -7px;
+            width: 0;
+            height: 2px;
+            background: #398bff;
+            box-shadow: 0 0 10px #398bff;
+            transition: width 0.3s ease;
         }
 
         nav a:hover {
-            color: #398bff;
+            color: #ffffff;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        button {
+            font-family: inherit;
+            transition:
+                transform 0.3s ease,
+                box-shadow 0.3s ease,
+                background 0.3s ease;
         }
 
         .login {
@@ -63,10 +153,34 @@
             cursor: pointer;
         }
 
+        .login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 22px rgba(57, 139, 255, 0.55);
+        }
+
+        /* HERO */
+
         .hero {
             text-align: center;
             padding: 110px 20px 85px;
-            background: radial-gradient(ellipse at top, #142b54 0%, #080b14 65%);
+            background:
+                radial-gradient(
+                    ellipse at 50% 0%,
+                    rgba(20, 43, 84, 0.95),
+                    rgba(8, 11, 20, 0.2) 70%
+                );
+            background-size: 180% 180%;
+            animation: heroLight 12s ease-in-out infinite alternate;
+            position: relative;
+        }
+
+        @keyframes heroLight {
+            from {
+                background-position: 0% 0%;
+            }
+            to {
+                background-position: 100% 100%;
+            }
         }
 
         .tag {
@@ -77,16 +191,58 @@
             border-radius: 30px;
             font-size: 13px;
             margin-bottom: 30px;
+            background: rgba(25, 55, 100, 0.25);
+            box-shadow: 0 0 18px rgba(57, 139, 255, 0.10);
+            animation: tagGlow 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes tagGlow {
+            from {
+                box-shadow: 0 0 8px rgba(57, 139, 255, 0.1);
+            }
+            to {
+                box-shadow: 0 0 23px rgba(57, 139, 255, 0.3);
+            }
         }
 
         h1 {
             font-size: clamp(42px, 7vw, 76px);
             line-height: 1.12;
             margin-bottom: 25px;
+            animation: heroEnter 1s ease both;
         }
 
         h1 span {
             color: #398bff;
+            background: linear-gradient(
+                90deg,
+                #398bff,
+                #73caff,
+                #9b79ff,
+                #398bff
+            );
+            background-size: 250% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textFlow 6s linear infinite;
+        }
+
+        @keyframes textFlow {
+            to {
+                background-position: 250% center;
+            }
+        }
+
+        @keyframes heroEnter {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .hero p {
@@ -95,6 +251,7 @@
             max-width: 650px;
             margin: auto;
             line-height: 1.7;
+            animation: heroEnter 1.2s ease both;
         }
 
         .hero-buttons {
@@ -103,9 +260,11 @@
             justify-content: center;
             gap: 15px;
             flex-wrap: wrap;
+            animation: heroEnter 1.4s ease both;
         }
 
-        .primary, .secondary {
+        .primary,
+        .secondary {
             padding: 16px 27px;
             border-radius: 10px;
             font-size: 15px;
@@ -113,16 +272,43 @@
         }
 
         .primary {
-            background: #398bff;
+            background: linear-gradient(
+                110deg,
+                #2875ed,
+                #398bff,
+                #5c9dff
+            );
+            background-size: 200% auto;
             color: white;
             border: none;
+            box-shadow: 0 0 20px rgba(57, 139, 255, 0.22);
+            animation: buttonFlow 5s linear infinite;
+        }
+
+        @keyframes buttonFlow {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        .primary:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 0 30px rgba(57, 139, 255, 0.65);
         }
 
         .secondary {
-            background: transparent;
+            background: rgba(255, 255, 255, 0.02);
             color: white;
             border: 1px solid #35415a;
         }
+
+        .secondary:hover {
+            transform: translateY(-4px);
+            border-color: #398bff;
+            box-shadow: 0 0 20px rgba(57, 139, 255, 0.2);
+        }
+
+        /* AI TOOLS */
 
         .tools {
             padding: 65px 8%;
@@ -142,45 +328,107 @@
 
         .cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            grid-template-columns: repeat(
+                auto-fit,
+                minmax(230px, 1fr)
+            );
             gap: 20px;
         }
 
         .card {
-            background: #101725;
+            background: rgba(16, 23, 37, 0.88);
             border: 1px solid #202c40;
             padding: 28px;
             border-radius: 16px;
-            transition: 0.3s;
+            transition:
+                transform 0.35s ease,
+                border-color 0.35s ease,
+                box-shadow 0.35s ease,
+                background 0.35s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            top: -100%;
+            left: -100%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                120deg,
+                transparent 40%,
+                rgba(57, 139, 255, 0.10) 50%,
+                transparent 60%
+            );
+            transition: transform 0.7s ease;
+            pointer-events: none;
+        }
+
+        .card:hover::before {
+            transform: translate(50%, 50%);
         }
 
         .card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
             border-color: #398bff;
+            background: rgba(19, 31, 51, 0.95);
+            box-shadow:
+                0 10px 35px rgba(0, 0, 0, 0.25),
+                0 0 25px rgba(57, 139, 255, 0.16);
         }
 
         .card-icon {
             font-size: 34px;
             margin-bottom: 22px;
+            display: inline-block;
+            transition: transform 0.4s ease;
+        }
+
+        .card:hover .card-icon {
+            transform: scale(1.15) rotate(-5deg);
         }
 
         .card h3 {
             font-size: 21px;
             margin-bottom: 13px;
+            position: relative;
         }
 
         .card p {
             color: #929eb2;
             line-height: 1.6;
             font-size: 14px;
+            position: relative;
         }
+
+        /* SCROLL REVEAL */
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(25px);
+            transition:
+                opacity 0.8s ease,
+                transform 0.8s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* FOOTER */
 
         footer {
             text-align: center;
             padding: 30px;
             color: #68758a;
             border-top: 1px solid #1b2233;
+            background: rgba(8, 11, 20, 0.5);
         }
+
+        /* MOBILE */
 
         @media (max-width: 700px) {
             header {
@@ -193,6 +441,40 @@
 
             .hero {
                 padding-top: 80px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .tools {
+                padding: 55px 5%;
+            }
+
+            .section-title {
+                font-size: 29px;
+            }
+
+            .card {
+                padding: 24px;
+            }
+        }
+
+        /* REDUCED MOTION */
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            .reveal {
+                opacity: 1;
+                transform: none;
             }
         }
     </style>
@@ -209,7 +491,9 @@
             <a href="#about">О платформе</a>
         </nav>
 
-        <button class="login">Войти</button>
+        <button class="login" onclick="showMessage()">
+            Войти
+        </button>
     </header>
 
     <section class="hero" id="home">
@@ -230,40 +514,41 @@
                 Начать бесплатно →
             </button>
 
-            <button class="secondary" onclick="document.getElementById('tools').scrollIntoView({behavior:'smooth'})">
+            <button class="secondary"
+                onclick="document.getElementById('tools').scrollIntoView({behavior:'smooth'})">
                 Изучить возможности
             </button>
         </div>
     </section>
 
     <section class="tools" id="tools">
-        <h2 class="section-title">Powerful AI Tools</h2>
+        <h2 class="section-title reveal">Powerful AI Tools</h2>
 
-        <p class="section-description">
+        <p class="section-description reveal">
             Инструменты искусственного интеллекта для твоих задач
         </p>
 
         <div class="cards">
 
-            <div class="card">
+            <div class="card reveal">
                 <div class="card-icon">✍️</div>
                 <h3>AI Writer</h3>
                 <p>Создавай тексты, рекламу, письма и публикации за несколько секунд.</p>
             </div>
 
-            <div class="card">
+            <div class="card reveal">
                 <div class="card-icon">📊</div>
                 <h3>AI Business</h3>
                 <p>Разрабатывай бизнес-планы, стратегии и анализируй идеи.</p>
             </div>
 
-            <div class="card">
+            <div class="card reveal">
                 <div class="card-icon">🤖</div>
                 <h3>AI Assistant</h3>
                 <p>Твой интеллектуальный помощник для ежедневных задач.</p>
             </div>
 
-            <div class="card">
+            <div class="card reveal">
                 <div class="card-icon">🎨</div>
                 <h3>AI Image</h3>
                 <p>Создавай изображения и воплощай свои творческие идеи.</p>
@@ -278,7 +563,37 @@
 
     <script>
         function showMessage() {
-            alert("Добро пожаловать в NEXORA AI! Скоро здесь появится регистрация.");
+            alert(
+                "Добро пожаловать в NEXORA AI! Скоро здесь появится регистрация."
+            );
+        }
+
+        // Smooth appearance of elements on scroll
+
+        const revealElements = document.querySelectorAll(".reveal");
+
+        if ("IntersectionObserver" in window) {
+            const observer = new IntersectionObserver(
+                (entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add("visible");
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                },
+                {
+                    threshold: 0.12
+                }
+            );
+
+            revealElements.forEach(element => {
+                observer.observe(element);
+            });
+        } else {
+            revealElements.forEach(element => {
+                element.classList.add("visible");
+            });
         }
     </script>
 
