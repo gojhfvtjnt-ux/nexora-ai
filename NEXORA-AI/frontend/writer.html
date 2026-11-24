@@ -1,0 +1,155 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Writer — NEXORA AI</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#080b14;color:#f5f7ff;min-height:100vh}
+header{height:75px;border-bottom:1px solid #20283a;display:flex;align-items:center;justify-content:space-between;padding:0 7%;background:#0b1020}
+.logo{font-size:23px;font-weight:800;letter-spacing:1px}
+.logo span{color:#4285ff}
+.back{color:#aab8d2;text-decoration:none}
+main{max-width:950px;margin:65px auto;padding:0 22px}
+.tag{color:#5794ff;font-size:13px;letter-spacing:2px;text-transform:uppercase;margin-bottom:15px}
+h1{font-size:42px;margin-bottom:14px}
+.subtitle{color:#9ba8c0;line-height:1.6;margin-bottom:35px}
+.panel{background:#10182a;border:1px solid #26334b;border-radius:18px;padding:28px}
+label{display:block;font-size:14px;margin-bottom:10px;color:#dce5f8}
+select,textarea{width:100%;background:#0a1120;color:white;border:1px solid #2c3b57;border-radius:10px;padding:14px;font-size:15px;outline:none;margin-bottom:24px}
+select:focus,textarea:focus{border-color:#4285ff}
+textarea{min-height:190px;resize:vertical;line-height:1.6}
+button{border:0;border-radius:10px;background:linear-gradient(100deg,#286cff,#7654ff);color:white;padding:15px 25px;font-size:15px;font-weight:bold;cursor:pointer;width:100%}
+button:disabled{opacity:.6;cursor:wait}
+#resultBox{display:none;margin-top:25px}
+#result{white-space:pre-wrap;line-height:1.7;color:#e3eaff;background:#0a1120;padding:20px;border-radius:10px;border:1px solid #26334b}
+#status{margin-top:15px;color:#9ba8c0;font-size:14px}
+footer{text-align:center;color:#66738d;padding:45px 15px;font-size:13px}
+@media(max-width:600px){h1{font-size:32px}.panel{padding:19px}main{margin-top:40px}}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">NEXORA <span>AI</span></div>
+<a class="back" href="/">← Главная</a>
+</header>
+
+<main>
+<div class="tag">NEXORA AI TOOLS</div>
+<h1>AI Writer</h1>
+<p class="subtitle">Создавай качественные тексты, рекламу, публикации и деловые письма с помощью искусственного интеллекта.</p>
+
+<div class="panel">
+<label for="task">Что нужно сделать?</label>
+<select id="task">
+<option value="Напиши рекламную публикацию">Рекламная публикация</option>
+<option value="Напиши пост для социальных сетей">Пост для соцсетей</option>
+<option value="Напиши деловое электронное письмо">Деловое письмо</option>
+<option value="Создай описание товара или услуги">Описание товара или услуги</option>
+<option value="Исправь ошибки и улучши текст">Исправить ошибки</option>
+<option value="Перепиши текст более профессионально">Улучшить текст</option>
+<option value="Переведи текст на английский язык">Перевод на английский</option>
+<option value="Напиши привлекательный рекламный текст">Рекламный текст</option>
+</select>
+
+<label for="inputText">Опиши задачу или введи исходный текст</label>
+<textarea id="inputText" placeholder="Например: Мы открываем новую кофейню. У нас вкусный кофе, уютная атмосфера и доступные цены..."></textarea>
+
+<button id="generate" onclick="generateText()">✨ Создать текст</button>
+<p id="status"></p>
+
+<div id="resultBox">
+<label>Результат AI Writer</label>
+<div id="result"></div>
+<div style="display:flex;gap:12px;margin-top:15px;flex-wrap:wrap;">
+    <button onclick="copyResult()" style="flex:1;background:#202d46;">
+        📋 Скопировать
+    </button>
+    <button onclick="downloadResult()" style="flex:1;background:#202d46;">
+        📥 Скачать TXT
+    </button>
+</div>
+</div>
+</div>
+</main>
+
+<footer>NEXORA AI — One platform. Many possibilities.</footer>
+
+<script>
+function copyResult(){
+ const text=document.getElementById("result").innerText;
+
+ if(!text.trim()){
+  alert("Сначала создай текст");
+  return;
+ }
+
+ navigator.clipboard.writeText(text)
+  .then(()=>alert("Текст скопирован!"))
+  .catch(()=>alert("Не удалось скопировать текст"));
+}
+
+function downloadResult(){
+ const text=document.getElementById("result").innerText;
+
+ if(!text.trim()){
+  alert("Сначала создай текст");
+  return;
+ }
+
+ const blob=new Blob([text],{type:"text/plain;charset=utf-8"});
+ const url=URL.createObjectURL(blob);
+ const link=document.createElement("a");
+
+ link.href=url;
+ link.download="NEXORA-AI-Writer.txt";
+ link.click();
+
+ URL.revokeObjectURL(url);
+}
+async function generateText(){
+ const text=document.getElementById("inputText").value.trim();
+ const task=document.getElementById("task").value;
+ const button=document.getElementById("generate");
+ const status=document.getElementById("status");
+ const resultBox=document.getElementById("resultBox");
+ const result=document.getElementById("result");
+
+ if(!text){
+  status.textContent="Сначала введи текст или описание задачи.";
+  return;
+ }
+
+ button.disabled=true;
+ button.textContent="Создаём текст...";
+ status.textContent="AI Writer работает. Подожди немного...";
+ resultBox.style.display="none";
+
+ try{
+  const response=await fetch("/api/writer/process",{
+   method:"POST",
+   headers:{"Content-Type":"application/json"},
+   body:JSON.stringify({text:text,task:task})
+  });
+
+  const data=await response.json();
+
+  if(!response.ok){
+   throw new Error(data.detail||"Не удалось создать текст");
+  }
+
+  result.textContent=data.result;
+  resultBox.style.display="block";
+  status.textContent="Готово! Твой текст создан.";
+ }catch(error){
+  status.textContent="Ошибка: "+error.message;
+ }finally{
+  button.disabled=false;
+  button.textContent="✨ Создать текст";
+ }
+}
+</script>
+</body>
+</html>
